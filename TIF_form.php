@@ -191,8 +191,6 @@ if ($sick == "Full of cold" || $sick == "A little sniffly"){
 echo "<br>";
 echo "<hr/>";
 
-//echo "Family: $_POST["family"]";//
-
 if ($life_f == '1' || $life_f == '2'){
   echo "Your family can form a key part of your support network. A strong support network can help with managing stress and big life changes.";
 }
