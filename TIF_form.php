@@ -31,7 +31,7 @@
       <table class="table table-responsive">
         <thead>
           <tr>
-            <th> Life Area</th>
+            <th> Rate these areas of your life from 1-5 (1 = very stressful 5 = perfectly balanced)</th>
           </tr>
         </thead>
         <tbody>
@@ -133,6 +133,7 @@ $nutrition= $_POST["Hunger_or_Thirst"];
 $sick = $_POST["Unwell"];
 $life_f = $_POST["family"];
 $life_fr = $_POST["friends"];
+$life_h = $_POST["home"];
 $life_w = $_POST["work"];
 $life_m = $_POST["myself"];
 
@@ -156,6 +157,12 @@ function insomnia($sleep, $sleep_help) {
 }  }
 
 insomnia($sleep, $sleep_help);
+
+$file = fopen("TIF_output.txt", "a+");
+$sleep_output = $_POST["Sleep_hours"];
+echo $sleep_output;
+fwrite($file, $sleep_output . "\n");
+fclose($file);
 
 echo "<br>";
 echo "<hr/>";
@@ -181,6 +188,12 @@ function diet($nutrition, $nutrition_help) {
 
   diet($nutrition, $nutrition_help);
 
+  $file = fopen("TIF_output.txt", "a+");
+  $nutrition_output = $_POST["Hunger_or_Thirst"];
+  echo $nutrition_output;
+  fwrite($file, $nutrition_output . "\n");
+  fclose($file);
+
 echo "<br>";
 echo "<hr/>";
 
@@ -188,37 +201,98 @@ if ($sick == "Full of cold" || $sick == "A little sniffly"){
   echo "Being physically unwell can also affect your stress levels and leave you feeling more emotional than usual.";
 }
 
+$file = fopen("TIF_output.txt", "a+");
+$sick_output = $_POST["Unwell"];
+echo $sick_output;
+fwrite($file, $sick_output . "\n");
+fclose($file);
+
 echo "<br>";
 echo "<hr/>";
 
-if ($life_f == '1' || $life_f == '2'){
+if ($life_f == '1'){
   echo "Your family can form a key part of your support network. A strong support network can help with managing stress and big life changes.";
 }
 
-echo "<br>";
+$file = fopen("TIF_output.txt", "a+");
+$lifef_output = $_POST["family"];
+echo $lifef_output;
+fwrite($file, $lifef_output . "\n");
+fclose($file);
 
-if ($life_fr == '1' || $life_fr == '2'){
+echo "<br>";
+echo "<hr/>";
+
+if ($life_fr == '1'){
   echo "Your friends can form a key part of your support network. A strong support network can help with managing stress and big life changes.";
 }
 
+$file = fopen("TIF_output.txt", "a+");
+$lifefr_output = $_POST["friends"];
+echo $lifefr_output;
+fwrite($file, $lifefr_output . "\n");
+fclose($file);
+
+echo "<br>";
+echo "<hr/>";
+
+if($life_h == '1'){
+  echo "Problems at home can have a huge impact on your mental health.";
+}
+
 echo "<br>";
 
-if($life_w == '5'){
+$shelter = "http://england.shelter.org.uk/get_advice";
+$shelter_dabuse = "http://england.shelter.org.uk/get_advice/domestic_abuse";
+
+function domestic_issues($life_h, $shelter, $shelter_dabuse){
+  if ($life_h == '1'){
+    echo "If you are struggling with housing issues or domestic abuse, Shelter can help:$shelter and $shelter_dabuse.";
+  }
+}
+
+domestic_issues($life_h, $shelter, $shelter_dabuse);
+
+$file = fopen("TIF_output.txt", "a+");
+$lifeh_output = $_POST["home"];
+echo $lifeh_output;
+fwrite($file, $lifeh_output . "\n");
+fclose($file);
+
+echo "<br>";
+echo "<hr/>";
+
+if($life_w == '1'){
   echo "Work/life balance is important for your mental health and lowering your stress levels. Try not to let work take over your life.";
 }
+
+echo "<br>";
 
 $wlb = "https://www.mentalhealth.org.uk/a-to-z/w/work-life-balance";
 
 function work_life_balance($life_w, $wlb){
-  if($life_w == '5'){
+  if($life_w == '1'){
     echo "Everyone struggles with work/life balance from time to time. Here are some helpful tips on how you and your employer can work together to improve things: $wlb";
   }
 }
 
 work_life_balance($life_w, $wlb);
 
+$file = fopen("TIF_output.txt", "a+");
+$lifew_output = $_POST["work"];
+echo $lifew_output;
+fwrite($file, $lifew_output . "\n");
+fclose($file);
+
 echo "<br>";
+echo "<hr/>";
 
 if($life_m == '1' || $life_m == '2'){
   echo "Taking time for yourself is a key way to keep your mental health in check and reduce stress. Why not do something nice for yourself?";
 }
+
+$file = fopen("TIF_output.txt", "a+");
+$lifem_output = $_POST["myself"];
+echo $lifem_output;
+fwrite($file, $lifem_output . "\n");
+fclose($file);
