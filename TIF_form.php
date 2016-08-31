@@ -1,7 +1,18 @@
+<?php
+include 'TIF_login_functions.php';
+
+session_start();
+
+require_login();
+validate_logout();
+
+?>
+
 <HTML>
   <meta charset='utf-8'>
   <head>
     <title>Today I Feel..</title>
+    <h1> Today I Feel...</h1>
   <body>
     <form action = "/TIF_form.php" method = "post">
       <label for="Sleep hours">How many hours sleep did you get last night?</label>
@@ -120,11 +131,14 @@
           </form>
         </tbody>
       </table>
+      <label for="Three Words">Write 3 words to describe your day:</label>
+        <input name="morning" type="text">
+        <input name="afternoon" type="text">
+        <input name="evening" type="text">
       <button type="submit">Answer</button>
+      <button type="submit"><a href="?logout">Logout</a></button>
 
 <?php
-print_r($_POST);
-
 echo "<br>";
 echo "<hr/>";
 
@@ -136,6 +150,7 @@ $life_fr = $_POST["friends"];
 $life_h = $_POST["home"];
 $life_w = $_POST["work"];
 $life_m = $_POST["myself"];
+$threewords = $_POST["Three_Words"];
 
 if ($sleep == "0 hours" || $sleep == "1-3 hours"){
   echo "You are suffering from lack of sleep. A lack of sleep can lower your stress threshold and decrease your ability to stay optimistic. This can leave you feeling unable to cope with things and unable to see anything positive.";
@@ -295,4 +310,10 @@ $file = fopen("TIF_output.txt", "a+");
 $lifem_output = $_POST["myself"];
 echo $lifem_output;
 fwrite($file, $lifem_output . "\n");
+fclose($file);
+
+$file = fopen("TIF_output.txt", "a+");
+$threewords = $_POST["Three_Words"];
+echo $threewords;
+fwrite($file, $threewords . "\n");
 fclose($file);
