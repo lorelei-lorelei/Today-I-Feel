@@ -29,10 +29,10 @@ validate_logout();
       <br>
       <label for="Hunger or Thirst">When did you last eat or drink?</label>
       <select name="Hunger or Thirst">
-        <option value="I've just eaten">I've just eaten</option>
+        <option value="Just eaten">Just eaten</option>
         <option value="3-4 hours ago">3-4 hours ago</option>
         <option value="5 or more hours ago">5 or more hours ago</option>
-        <option value="I don't remember">I don't remember</option>
+        <option value="More than 12 hours ago">More than 12 hours ago</option>
       </select>
       <br>
       <label for="Unwell">Are you sick?</label>
@@ -40,7 +40,7 @@ validate_logout();
         <option value="Full of beans!">Full of beans!</option>
         <option value="Fine">Fine</option>
         <option value="A little sniffly">A little sniffly</option>
-        <option value="Full of cold">Full of cold</option>
+        <option value="Sick as a parrot">Sick as a parrot</option>
       </select>
       <table class="table table-responsive">
         <thead>
@@ -196,13 +196,13 @@ fclose($file);
 echo "<br>";
 echo "<hr/>";
 
-if ($nutrition == "I don't remember"){
+if ($nutrition == "More than 12 hours ago"){
   echo "If you are skipping meals or undereating this will affect your mood, stress and anxiety levels. Please consider speaking to your GP about this.";
 } elseif ($nutrition == "5 or more hours ago"){
   echo "You are hungry. Hunger can affect your mood, stress levels, concentration levels and ability to deal with day to day demands. Maybe it's time for a snack?";
 } elseif ($nutrition == "3-4 hours ago"){
   echo "You are probably thirsty rather than hungry. Dehydration can make it harder to concentrate and make brain tasks seem more stressful than usual. Why not drink a glass of water and see if it helps?";
-} elseif ($nutrition == "I've just eaten") {
+} elseif ($nutrition == "Just eaten") {
   echo "Awesome! You are taking good care of your physical self which will also help your mental state. Let's look at other things that might be making you feel emotionally wobbly.";
 }
 
@@ -226,7 +226,7 @@ function diet($nutrition, $nutrition_help) {
 echo "<br>";
 echo "<hr/>";
 
-if ($sick == "Full of cold" || $sick == "A little sniffly"){
+if ($sick == "Sick as a parrot" || $sick == "A little sniffly"){
   echo "Being physically unwell can also affect your stress levels and leave you feeling more emotional than usual.";
 }
 
