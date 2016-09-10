@@ -14,7 +14,10 @@ validate_logout();
     <title>Today I Feel..</title>
     <h1> Today I Feel...</h1>
   <body>
-    <form action = "/TIF_form.php" method = "post">
+    <form action = "/TIF_form.php" method = "post" enctype="multipart/form-data">
+
+      <input type="hidden" name="MAX_FILE_SIZE" value="100000000">
+
       <label for="Sleep hours">How many hours sleep did you get last night?</label>
       <select name="Sleep hours">
         <option value="8+ hours">8+ hours</option>
@@ -132,16 +135,27 @@ validate_logout();
         </tbody>
       </table>
       <label for="Three Words">Write 3 words to describe your day:</label>
-        <input name="morning" type="text">
-        <input name="afternoon" type="text">
-        <input name="evening" type="text">
+        <input name="three_words[]" type="text">
+        <input name="three_words[]" type="text">
+        <input name="three_words[]" type="text">
+        <br>
+      <label for="image_upload">Add an image to show how you feel today:</label>
+        <input name="image" type="file">
       <button type="submit">Answer</button>
       <button type="submit"><a href="?logout">Logout</a></button>
+  </form>
+  <br>
+  <img src="Images/test.jpg" alt="test image" width="300" height="300">
+
+
 
 <?php
+print_r($_POST);
+print_r($_FILES);
 echo "<br>";
 echo "<hr/>";
 
+$destination = "Images/";
 $sleep = $_POST["Sleep_hours"];
 $nutrition= $_POST["Hunger_or_Thirst"];
 $sick = $_POST["Unwell"];
@@ -150,7 +164,7 @@ $life_fr = $_POST["friends"];
 $life_h = $_POST["home"];
 $life_w = $_POST["work"];
 $life_m = $_POST["myself"];
-$threewords = $_POST["Three_Words"];
+$threewords = $_POST["three_words"];
 
 if ($sleep == "0 hours" || $sleep == "1-3 hours"){
   echo "You are suffering from lack of sleep. A lack of sleep can lower your stress threshold and decrease your ability to stay optimistic. This can leave you feeling unable to cope with things and unable to see anything positive.";
@@ -313,7 +327,9 @@ fwrite($file, $lifem_output . "\n");
 fclose($file);
 
 $file = fopen("TIF_output.txt", "a+");
-$threewords = $_POST["Three_Words"];
+$threewords = $_POST["three_words"];
 echo $threewords;
-fwrite($file, $threewords . "\n");
+fwrite($file, join(", ", $threewords) . "\n");
 fclose($file);
+
+move_uploaded_file($_FILES["image"]["tmp_name"] , $destination . "test.jpg");
